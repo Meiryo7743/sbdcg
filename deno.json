@@ -1,6 +1,7 @@
 {
   "tasks": {
     "csv": "deno run --allow-write --allow-net src/index.ts",
+    "json": "deno task csv && deno run --allow-write --allow-read src/generate_json.ts",
     "exe": "deno compile --allow-write --allow-net --target x86_64-pc-windows-msvc --no-terminal -o dist/sbdcg_windows_x86_64.exe src/index.ts"
   }
 }
