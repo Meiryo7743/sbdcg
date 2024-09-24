@@ -3,7 +3,7 @@ import { BusDirection, List } from "./bus_data.d.ts";
 export const busRushHoursTimetable = (list: List[], direction: BusDirection) =>
   list
     .filter(
-      (item) => item[direction].memo1 !== "" || item[direction].memo2 !== ""
+      (item) => item[direction].memo1 !== "" || item[direction].memo2 !== "",
     )
     .flatMap((item) => {
       const hour = item.time.padStart(2, "0");
@@ -23,8 +23,8 @@ export const busRushHoursTimetable = (list: List[], direction: BusDirection) =>
             const endMinute = Number(
               memo.replace(
                 /^[0-9]{1,2}:([0-9]{1,2})まで(?:間隔を狭めて|適時)運行$/,
-                "$1"
-              )
+                "$1",
+              ),
             );
             const length = endMinute + 1;
             return Array(length)
@@ -39,8 +39,8 @@ export const busRushHoursTimetable = (list: List[], direction: BusDirection) =>
             const startMinute = Number(
               memo.replace(
                 /^[0-9]{1,2}:([0-9]{1,2})より(?:間隔を狭めて|適時)運行$/,
-                "$1"
-              )
+                "$1",
+              ),
             );
             const length = 60 - startMinute;
             return Array(length)
@@ -50,14 +50,15 @@ export const busRushHoursTimetable = (list: List[], direction: BusDirection) =>
           }
 
           if (
-            /^[0-9]{1,2}:[0-9]{1,2}より[0-9]{1,2}:[0-9]{1,2}まで(?:間隔を狭めて|適時)運行$/.test(
-              memo
-            )
+            /^[0-9]{1,2}:[0-9]{1,2}より[0-9]{1,2}:[0-9]{1,2}まで(?:間隔を狭めて|適時)運行$/
+              .test(
+                memo,
+              )
           ) {
             const minuteList = memo
               .replace(
                 /^[0-9]{1,2}:([0-9]{1,2})より[0-9]{1,2}:([0-9]{1,2})まで(?:間隔を狭めて|適時)運行$/,
-                "$1,$2"
+                "$1,$2",
               )
               .split(",")
               .map((minute) => Number(minute));

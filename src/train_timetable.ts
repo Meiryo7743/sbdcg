@@ -1,20 +1,20 @@
-import { List, TrainDirection, SiteInfo } from "./bus_data.d.ts";
+import { List, SiteInfo, TrainDirection } from "./bus_data.d.ts";
 
 const findDestination = (
   siteInfo: SiteInfo,
   mark: string,
-  direction: TrainDirection
+  direction: TrainDirection,
 ) => {
   return siteInfo.will[direction === "train_left" ? "down" : "up"].filter(
     (destination) =>
-      mark === "" ? destination.mark === "default" : destination.mark === mark
+      mark === "" ? destination.mark === "default" : destination.mark === mark,
   )[0].tip;
 };
 
 export const trainTimetable = (
   list: List[],
   direction: TrainDirection,
-  siteInfo: SiteInfo
+  siteInfo: SiteInfo,
 ) =>
   list
     .flatMap((item) => {
@@ -32,7 +32,7 @@ export const trainTimetable = (
           const [mark, time] = item;
           const track = direction === "train_left" ? "1" : "2";
           return [time, track, findDestination(siteInfo, mark, direction)].join(
-            ","
+            ",",
           );
         });
     })

@@ -1,11 +1,11 @@
 import type {
+  BusDirection,
+  Calendar,
   Root,
   Timesheet,
-  BusDirection,
   TrainDirection,
-  Calendar,
 } from "./bus_data.d.ts";
-import { busTimetable, busRushHoursTimetable } from "./bus_timetable.ts";
+import { busRushHoursTimetable, busTimetable } from "./bus_timetable.ts";
 import { trainTimetable } from "./train_timetable.ts";
 import { calendarTable } from "./calendar.ts";
 

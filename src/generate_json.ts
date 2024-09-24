@@ -6,7 +6,7 @@ const generateCalendar = () => {
     .split("\n")
     .map((item) => item.split(","))
     .forEach(
-      (item) => (calendar[item[0]] = item[1] !== "null" ? item[1] : null)
+      (item) => (calendar[item[0]] = item[1] !== "null" ? item[1] : null),
     );
   return calendar;
 };
