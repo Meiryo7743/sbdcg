@@ -1,4 +1,4 @@
-import { List, BusDirection } from "./bus_data.d.ts";
+import { BusDirection, List } from "./bus_data.d.ts";
 
 export const busRushHoursTimetable = (list: List[], direction: BusDirection) =>
   list
@@ -10,17 +10,19 @@ export const busRushHoursTimetable = (list: List[], direction: BusDirection) =>
       return [item[direction].memo1, item[direction].memo2]
         .filter((memo) => memo !== "")
         .map((memo) => {
-          if (memo === "間隔を狭めて運行") {
+          if (/^(?:間隔を狭めて|適時)運行$/.test(memo)) {
             return Array(60)
               .fill(0)
               .flatMap((_, i) => `${i}`.padStart(2, "0"))
               .map((minute) => `${hour}:${minute}:00`);
           }
 
-          if (/^[0-9]{1,2}:[0-9]{1,2}まで間隔を狭めて運行$/.test(memo)) {
+          if (
+            /^[0-9]{1,2}:[0-9]{1,2}まで(?:間隔を狭めて|適時)運行$/.test(memo)
+          ) {
             const endMinute = Number(
               memo.replace(
-                /^[0-9]{1,2}:([0-9]{1,2})まで間隔を狭めて運行$/,
+                /^[0-9]{1,2}:([0-9]{1,2})まで(?:間隔を狭めて|適時)運行$/,
                 "$1"
               )
             );
@@ -31,10 +33,12 @@ export const busRushHoursTimetable = (list: List[], direction: BusDirection) =>
               .map((minute) => `${hour}:${minute}:00`);
           }
 
-          if (/^[0-9]{1,2}:[0-9]{1,2}より間隔を狭めて運行$/.test(memo)) {
+          if (
+            /^[0-9]{1,2}:[0-9]{1,2}より(?:間隔を狭めて|適時)運行$/.test(memo)
+          ) {
             const startMinute = Number(
               memo.replace(
-                /^[0-9]{1,2}:([0-9]{1,2})より間隔を狭めて運行$/,
+                /^[0-9]{1,2}:([0-9]{1,2})より(?:間隔を狭めて|適時)運行$/,
                 "$1"
               )
             );
@@ -46,13 +50,13 @@ export const busRushHoursTimetable = (list: List[], direction: BusDirection) =>
           }
 
           if (
-            /^[0-9]{1,2}:[0-9]{1,2}より[0-9]{1,2}:[0-9]{1,2}まで間隔を狭めて運行$/.test(
+            /^[0-9]{1,2}:[0-9]{1,2}より[0-9]{1,2}:[0-9]{1,2}まで(?:間隔を狭めて|適時)運行$/.test(
               memo
             )
           ) {
             const minuteList = memo
               .replace(
-                /^[0-9]{1,2}:([0-9]{1,2})より[0-9]{1,2}:([0-9]{1,2})まで間隔を狭めて運行$/,
+                /^[0-9]{1,2}:([0-9]{1,2})より[0-9]{1,2}:([0-9]{1,2})まで(?:間隔を狭めて|適時)運行$/,
                 "$1,$2"
               )
               .split(",")
